@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include 'partials/_head.html' %}
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Header -->
+    {% include "partials/_header.html" %}
+
+    <!-- Main content -->
+    <main class="flex-grow-1">
+      {% if messages %}
+        {% for message in message %}
+        <div class="alert alert-warning" role="alert">
+          {{message}}
+        </div>
+        {%endfor%}
+      {%endif%}
+      {% block content %}{% endblock %}
+    </main>
+
+    {% include 'partials/_scripts.html' %}
+    {% block extra_scripts %}{% endblock %}
+
+    <!-- Footer -->
+    {% include 'partials/_footer.html' %} <!-- O footer -->
+  </body>
+</html>

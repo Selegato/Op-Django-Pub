@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block content %}
+{% load static %}
+<style>
+  .beneficio-checkbox {
+    transform: scale(2.5); /* checkbox size */
+    margin: 10px; /* center */
+  }
+  td {
+    /* center */
+    vertical-align: middle;
+    text-align: center;
+  }
+  #loadingIndicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h1 class="text-center mb-4">Busca Beneficios</h1>
+      <div class="card">
+        <div class="card-body">
+          <form id="cpfForm">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+              {{ cpf_form.cpf }}
+              {% if cpf_form.cpf.errors %}
+                  <div class="error">
+                      {{ cpf_form.cpf.errors }}
+                  </div>
+              {% endif %}
+              <button class="btn btn-primary" type="submit">Buscar</button>
+            </div>
+          </form>
+
+            <div id="customerInfo" style="display: none" class="mt-3">
+            <div
+              class="container d-flex align-itens-center justify-content-center"
+            >
+              <h2>Dados Cliente:</h2>
+            </div>
+            <div
+              class="container d-flex align-itens-center justify-content-center gap-3"
+            >
+              <div>
+                <p><strong>Nome:</strong> <span id="customerName"></span></p>
+              </div>
+              <div>
+                <p>
+                  <strong>Email:</strong>
+                  <span id="customerEmail"></span>
+                </p>
+              </div>
+              <div>
+                <p>
+                  <strong>Telefone:</strong>
+                  <span id="customerPhone"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+
+      <div id="divBeneficios" style="display: none" class="mt-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Beneficios disponiveis:</h5>
+            <div id="beneficiosContainer" class="table-responsive"></div>
+
+            
+            <button id="btnBaixa" class="btn btn-primary" style="display: show">
+              Baixar
+            </button>
+            <div id="loadingIndicator" style="display: none">
+              <p>Baixando benefícios, por favor aguarde...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} 
+
+{% block extra_scripts %}
+<script src="{% static 'js/beneficios.js' %}"></script>
+{% endblock %}
